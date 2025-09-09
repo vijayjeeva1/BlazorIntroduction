@@ -1,0 +1,13 @@
+﻿<!-- Since this does not have page directive, this is a non-routable component. 
+It can be used inside other components but can't be located with url. 
+This will be used inside the Servers.razor routable component. -->
+
+<div data-name="@server.Name" 
+	data-status="Server is @(server.IsOnline ? "online" : "offline")"
+	 style="@($"color:{(server.IsOnline ? "green" : "red")}")">
+	@server.Name is in @server.City that is @(server.IsOnline ? "online" : "offline")
+</div>
+
+@code {
+	private Server server = new Server { Name = "Server 1", City = "Toronto" };
+}

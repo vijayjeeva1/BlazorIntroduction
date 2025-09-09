@@ -1,0 +1,17 @@
+﻿<!-- This page directive with url extension is what makes a component a routable component -->
+@page "/servers"
+
+<h3>Servers</h3>
+
+<br/>
+<br/>
+
+<!-- References ServerComponent which is a non-routable component -->
+<!-- Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to not have to use entire namespace every time-->
+<ServerComponent></ServerComponent>
+<br/>
+<ServerComponent></ServerComponent>
+
+@code {
+
+}
