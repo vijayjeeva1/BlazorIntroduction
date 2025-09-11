@@ -45,8 +45,8 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 				@(server.IsOnline ? "Online" : "Offline")
 			</span>
 			&nbsp; @*This is a space.*@
-
-			<a href="/servers/edit" class="btn btn-link">Edit</a>
+			@*Use route parameters to go to specific server edit page*@
+			<a href="/servers/@server.ServerId" class="btn btn-link">Edit</a>
 		</li>
 	}
 </ul>
