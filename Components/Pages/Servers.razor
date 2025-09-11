@@ -12,13 +12,20 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 <br/>
 <ServerComponent></ServerComponent> *@
 
-@*Add bootstrap container to format buttons and make them align properly when resizing the window*@
+@*Add bootstrap container to format buttons and make them align properly when resizing the window.
+	Found card component from bootstrap website - https://getbootstrap.com/docs/5.3/components/card/
+*@
 <div class="container-fluid text-center">
 	<div class="row w-50">
 		@foreach (var city in cities)
 		{
 			<div class="col">
-				<button type="button" class="btn btn-primary">@city</button>
+				<div class="card">
+					<img src="@($"/images/{city}.jpg")" class="card-img-top" alt="...">
+					<div class="card-body">
+						<button type="button" class="btn btn-primary">@city</button>
+					</div>
+				</div>
 			</div>
 		}
 	</div>
@@ -36,7 +43,10 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 			@server.Name in @server.City is
 			<span style="color:@((server.IsOnline ? "green" : "red"))">
 				@(server.IsOnline ? "Online" : "Offline")
-			</span>;
+			</span>
+			&nbsp; @*This is a space.*@
+
+			<a href="/servers/edit" class="btn btn-link">Edit</a>
 		</li>
 	}
 </ul>
