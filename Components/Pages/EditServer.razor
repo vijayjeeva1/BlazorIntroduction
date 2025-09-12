@@ -12,7 +12,9 @@
 	@*Edit form can be used to have a nice, organized structure. 
 	Use Model attribute to represent data context (server in this case).
 	There are many different types of input components - we use InputText and InputCheckbox here.*@
-	<EditForm Model="server" FormName="formServer" OnSubmit="Submit">
+	<EditForm Model="server" FormName="formServer" OnValidSubmit="Submit">
+		<DataAnnotationsValidator></DataAnnotationsValidator>
+		<ValidationSummary></ValidationSummary>
 
 		@*We don't want this displayed but we still want it bound.
 			So, we add the ServerId as an InputNumber and set it to hidden*@
@@ -25,6 +27,9 @@
 			<div class="col-6">
 				<InputText @bind-Value="server.Name" class="form-control"/>
 			</div>
+			<div class="col">
+				<ValidationMessage For="() => server.Name"></ValidationMessage>
+			</div>
 		</div>
 
 		<div class="row mb-3">
@@ -33,6 +38,9 @@
 			</div>
 			<div class="col-6">
 				<InputText @bind-Value="server.City" class="form-control" />
+			</div>
+			<div class="col">
+				<ValidationMessage For="() => server.City"></ValidationMessage>
 			</div>
 		</div>
 
