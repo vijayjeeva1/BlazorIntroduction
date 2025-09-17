@@ -1,6 +1,8 @@
 ﻿@* This @page directive with url extension is what makes a component a routable component*@
 @page "/servers"
 
+@inject NavigationManager NavigationManager
+
 <h3>Servers</h3>
 
 <br/>
@@ -45,8 +47,20 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 				@(server.IsOnline ? "Online" : "Offline")
 			</span>
 			&nbsp; @*This is a space.*@
+
 			@*Use route parameters to go to specific server edit page*@
 			<a href="/servers/@server.ServerId" class="btn btn-link">Edit</a>
+
+			@*Need to create a form to delete servers. 
+			Need to do it this way (instead of adding a regular button) because that is how we will properly hook up with the model (server).
+			Note that the form name needs to be unique, so to ensure this happens inside the for loop, user implicit function and get server id.
+			On Submit will be handled by our DeleteServer function.*@
+			<EditForm 
+				Model="server"
+				FormName="@($"form-server-{server.ServerId}")"
+				OnValidSubmit="@(() => { DeleteServer(server.ServerId); })">
+					<button type="submit" class="btn btn-primary">Delete</button> 
+			</EditForm>
 		</li>
 	}
 </ul>
@@ -56,6 +70,15 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 
 @code {
 
-		private List<Server> servers = ServersRepository.GetServersByCity("Toronto");
-		private List<string> cities = CitiesRepository.GetCities();
+	private List<Server> servers = ServersRepository.GetServersByCity("Toronto");
+	private List<string> cities = CitiesRepository.GetCities();
+
+	private void DeleteServer(int serverId)
+	{
+		if (serverId > 0)
+		{
+			ServersRepository.DeleteServer(serverId);
+			NavigationManager.Refresh(); // Refreshes page so that deleted server is gone.
+		}
+	}
 }
