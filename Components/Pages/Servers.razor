@@ -50,8 +50,11 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 		</li>
 	}
 </ul>
+<p>
+	<a href="/servers/add" class="btn btn-primary">Add Server</a>
+</p>
 
-	@code {
+@code {
 
 		private List<Server> servers = ServersRepository.GetServersByCity("Toronto");
 		private List<string> cities = CitiesRepository.GetCities();
