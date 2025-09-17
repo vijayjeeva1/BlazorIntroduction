@@ -6,9 +6,6 @@
 
 @if (server != null)
 {
-	@*Edit form can be used to have a nice, organized structure. 
-	Use Model attribute to represent data context (server in this case).
-	There are many different types of input components - we use InputText and InputCheckbox here.*@
 	<EditForm Model="server" FormName="formServer" OnValidSubmit="Submit">
 		<DataAnnotationsValidator></DataAnnotationsValidator>
 		<ValidationSummary></ValidationSummary>
@@ -46,10 +43,8 @@
 			</div>
 		</div>
 		<br />
-		@*Submit button that will submit the form*@
 		<button class="btn btn-primary" type="submit">Save</button>
 		&nbsp;
-		@*Close button that just links to servers page*@
 		<a href="/servers" class="btn btn-primary">Close</a>
 	</EditForm>
 }
@@ -58,7 +53,6 @@
 	[SupplyParameterFromForm]
 	private Server server { get; set; } = new Server() { IsOnline = false };
 
-	// Event handler for submit button
 	private void Submit()
 	{
 		if (server != null)
