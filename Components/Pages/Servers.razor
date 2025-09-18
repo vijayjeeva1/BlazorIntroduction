@@ -34,9 +34,9 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 </div>
 
 <br/>
-<p>
-	<ServerComponent></ServerComponent>
-</p>
+
+<ServerComponent @rendermode="InteractiveServer"></ServerComponent>
+
 <ul>
 	@* Use @ to use C# syntax in html section. Always need curly braces for control structures.
 		You can use html elements inside the loop to repeatedly display them in a list.
