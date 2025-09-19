@@ -1,6 +1,8 @@
 ﻿@* This @page directive with url extension is what makes a component a routable component*@
 @page "/servers"
 
+@rendermode InteractiveServer
+
 @inject NavigationManager NavigationManager
 
 <h3>Servers</h3>
@@ -22,10 +24,10 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 		@foreach (var city in cities)
 		{
 			<div class="col">
-				<div class="card">
+				<div class="card @(selectedCity == city ? "border-primary" : "")">
 					<img src="@($"/images/{city}.jpg")" class="card-img-top" alt="...">
 					<div class="card-body">
-						<button type="button" class="btn btn-primary">@city</button>
+						<button type="button" class="btn btn-primary" @onclick="@(() => {SelectCity(city); })">@city</button>
 					</div>
 				</div>
 			</div>
@@ -34,8 +36,6 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 </div>
 
 <br/>
-
-<ServerComponent @rendermode="InteractiveServer"></ServerComponent>
 
 <ul>
 	@* Use @ to use C# syntax in html section. Always need curly braces for control structures.
@@ -74,6 +74,7 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 
 	private List<Server> servers = ServersRepository.GetServersByCity("Toronto");
 	private List<string> cities = CitiesRepository.GetCities();
+	private string selectedCity = "Toronto";
 
 	private void DeleteServer(int serverId)
 	{
@@ -82,5 +83,11 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 			ServersRepository.DeleteServer(serverId);
 			NavigationManager.Refresh(); // Refreshes page so that deleted server is gone.
 		}
+	}
+
+	private void SelectCity(string cityName)
+	{
+		this.selectedCity = cityName;
+		this.servers = ServersRepository.GetServersByCity(this.selectedCity);
 	}
 }
