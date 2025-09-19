@@ -37,7 +37,9 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 
 <br/>
 <div class="input-group mb-3">
-	<input type="text" class="form-control" placeholder="Search Servers" @onchange="HandleServerFilterChanged" />
+	<input type="text" class="form-control" placeholder="Search Servers" 
+		@bind-value="serverFilter" 
+		@bind-value:event="oninput" />
 	<button class="btn btn-outline-secondary" type="button" @onclick="HandleSearch">Search</button>
 </div>
 
@@ -81,7 +83,17 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 	private List<Server> servers = ServersRepository.GetServersByCity("Toronto");
 	private List<string> cities = CitiesRepository.GetCities();
 	private string selectedCity = "Toronto";
-	private string serverFilter = "";
+
+	private string _serverFilter = "";
+	private string serverFilter 
+	{ 
+		get => _serverFilter; 
+		set
+		{
+			_serverFilter = value;
+			this.servers = ServersRepository.SearchServers(_serverFilter);
+		}		
+	}
 
 	private void DeleteServer(int serverId)
 	{
@@ -96,11 +108,6 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 	{
 		this.selectedCity = cityName;
 		this.servers = ServersRepository.GetServersByCity(this.selectedCity);
-	}
-
-	private void HandleServerFilterChanged(ChangeEventArgs args)
-	{
-		serverFilter = args.Value?.ToString() ?? string.Empty;
 	}
 
 	private void HandleSearch()
