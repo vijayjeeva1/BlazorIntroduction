@@ -36,6 +36,12 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 </div>
 
 <br/>
+<div class="input-group mb-3">
+	<input type="text" class="form-control" placeholder="Search Servers" @onchange="HandleServerFilterChanged" />
+	<button class="btn btn-outline-secondary" type="button" @onclick="HandleSearch">Search</button>
+</div>
+
+<br/>
 
 <ul>
 	@* Use @ to use C# syntax in html section. Always need curly braces for control structures.
@@ -75,6 +81,7 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 	private List<Server> servers = ServersRepository.GetServersByCity("Toronto");
 	private List<string> cities = CitiesRepository.GetCities();
 	private string selectedCity = "Toronto";
+	private string serverFilter = "";
 
 	private void DeleteServer(int serverId)
 	{
@@ -89,5 +96,16 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 	{
 		this.selectedCity = cityName;
 		this.servers = ServersRepository.GetServersByCity(this.selectedCity);
+	}
+
+	private void HandleServerFilterChanged(ChangeEventArgs args)
+	{
+		serverFilter = args.Value?.ToString() ?? string.Empty;
+	}
+
+	private void HandleSearch()
+	{
+		this.servers = ServersRepository.SearchServers(serverFilter);
+		this.selectedCity = string.Empty;
 	}
 }
