@@ -49,9 +49,8 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 	@* Use @ to use C# syntax in html section. Always need curly braces for control structures.
 		You can use html elements inside the loop to repeatedly display them in a list.
 	*@
-	@foreach(var server in servers)
-	{
-		<li>
+	<Virtualize Items="this.servers" Context="server">
+		<li @key="server.ServerId">
 			@server.Name in @server.City is
 			<span style="color:@((server.IsOnline ? "green" : "red"))">
 				@(server.IsOnline ? "Online" : "Offline")
@@ -72,7 +71,7 @@ Need to add @using BlazorIntroduction.Components.Controls to _imports.razor to n
 					<button type="submit" class="btn btn-primary">Delete</button> 
 			</EditForm>
 		</li>
-	}
+	</Virtualize>
 </ul>
 <p>
 	<a href="/servers/add" class="btn btn-primary">Add Server</a>
